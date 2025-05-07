@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cmyk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girls Hostels - Hostel-lite</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.0/dist/full.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Adjust letter spacing for better readability */
+        body {
+            letter-spacing: -0.025em;
+        }
+
+        /* Enhance heading styles */
+        .hostel-title {
+            letter-spacing: -0.05em;
+            font-weight: 700;
+        }
+
+        /* Enhance badge text */
+        .badge {
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+
+        /* Price text */
+        .price-text {
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: row;
+                align-items: center;
+                padding: 0.5rem 0;
+            }
+            .navbar .flex-1 {
+                justify-content: flex-start;
+                width: auto;
+            }
+            .navbar .flex-none {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                background: none;
+                border: none;
+                color: inherit;
+                font-size: 2rem;
+                cursor: pointer;
+                margin-left: auto;
+                z-index: 51;
+            }
+            .mobile-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(31,41,55,0.98);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 5rem;
+                z-index: 50;
+                transition: all 0.3s;
+            }
+            .mobile-menu.active {
+                display: flex;
+            }
+            .mobile-menu ul {
+                flex-direction: column;
+                gap: 2rem;
+                width: 100%;
+                align-items: center;
+                margin-bottom: 2rem;
+            }
+            .mobile-menu .form-control {
+                width: 90vw;
+                margin: 0 auto;
+            }
+        }
+        @media (min-width: 769px) {
+            .mobile-menu-btn {
+                display: none !important;
+            }
+            .mobile-menu {
+                display: none !important;
+            }
+        }
+        @media (min-width: 1025px) {
+            .container .grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-base-100">
+    <!-- Navbar -->
+    <div class="navbar bg-gray-900 text-gray-300 shadow-lg relative">
+        <div class="flex-1">
+            <div class="flex items-center">
+                <a href="index.html" class="flex items-center">
+                    <div class="avatar placeholder">
+                        <div class="bg-primary/20 text-primary rounded-full w-12">
+                            <span class="text-xl font-bold">RV</span>
+                        </div>
+                    </div>
+                    <span class="text-xl font-bold ml-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                        Hostel-lite
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!-- Hamburger Button for Mobile -->
+        <button class="mobile-menu-btn" aria-label="Open menu" onclick="toggleMobileMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+        <!-- Desktop Navigation -->
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1">
+                <li><a href="index.html" class="text-lg font-semibold hover:text-primary transition-colors">Home</a></li>
+                <li><a href="index.html#about" class="text-lg font-semibold hover:text-primary transition-colors">About Us</a></li>
+                <li><a href="index.html#contact" class="text-lg font-semibold hover:text-primary transition-colors">Contact Us</a></li>
+            </ul>
+            <div class="form-control ml-4">
+                <div class="input-group">
+                    <input type="text" placeholder="Search..." class="input input-bordered bg-gray-800 border-gray-700 text-gray-300 placeholder-gray-500 focus:border-primary" />
+                    <button class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="menu menu-vertical px-1">
+                <li><a href="index.html" class="text-lg font-semibold hover:text-primary transition-colors" onclick="closeMobileMenu()">Home</a></li>
+                <li><a href="index.html#about" class="text-lg font-semibold hover:text-primary transition-colors" onclick="closeMobileMenu()">About Us</a></li>
+                <li><a href="index.html#contact" class="text-lg font-semibold hover:text-primary transition-colors" onclick="closeMobileMenu()">Contact Us</a></li>
+            </ul>
+            <div class="form-control mt-2">
+                <div class="input-group">
+                    <input type="text" placeholder="Search..." class="input input-bordered bg-gray-800 border-gray-700 text-gray-300 placeholder-gray-500 focus:border-primary" />
+                    <button class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <div class="bg-base-200 py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl hostel-title text-pink-500 mb-4">Girls Hostels</h1>
+            <p class="text-xl font-medium text-secondary">Find your perfect accommodation from our carefully selected hostels</p>
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-wrap gap-4 mb-8">
+            <select class="select select-primary w-full max-w-xs font-medium" id="priceFilter">
+                <option value="">All Prices</option>
+                <option value="8000-10000">₹8,000 - ₹10,000</option>
+                <option value="10000-12000">₹10,000 - ₹12,000</option>
+                <option value="12000+">₹12,000+</option>
+            </select>
+            <select class="select select-primary w-full max-w-xs" id="roomFilter">
+                <option value="">All Room Types</option>
+                <option value="single">Single Sharing</option>
+                <option value="double">Double Sharing</option>
+                <option value="triple">Triple Sharing</option>
+            </select>
+            <select class="select select-primary w-full max-w-xs" id="distanceFilter">
+                <option value="">All Distances</option>
+                <option value="0-1">Within 1 km</option>
+                <option value="1-2">1-2 km</option>
+                <option value="2-3">2-3 km</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Hostels Listing -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Hostel Card 1 -->
+            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow" 
+                data-price="10000" 
+                data-room="double" 
+                data-distance="0.5">
+                <figure class="px-4 pt-4">
+                    <img src="topaz.png" alt="Hostel" class="rounded-xl h-64 w-full object-cover" />
+                </figure>
+                <div class="card-body">
+                    <h2 class="card-title text-primary">Topaz Girls Hostel</h2>
+                    <div class="flex items-center gap-2 text-base-content/70">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>0.5 km from campus</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 my-2">
+                        <div class="badge badge-info">WiFi</div>
+                        <div class="badge badge-success">Laundry</div>
+                        <div class="badge badge-warning">Mess</div>
+                    </div>
+                    <p class="text-base-content/70">Starting from</p>
+                    <p class="text-2xl font-bold text-primary">₹10,000/month</p>
+                    <div class="card-actions justify-end mt-4">
+                        <button class="btn btn-primary">View Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hostel Card 2 -->
+            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow" 
+                data-price="8500" 
+                data-room="single" 
+                data-distance="1.2">
+                <figure class="px-4 pt-4">
+                    <img src="hostel2.jpg" alt="Hostel" class="rounded-xl h-64 w-full object-cover" />
+                </figure>
+                <div class="card-body">
+                    <h2 class="card-title text-primary">Coral Girls Hostel</h2>
+                    <div class="flex items-center gap-2 text-base-content/70">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>1.2 km from campus</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 my-2">
+                        <div class="badge badge-info">WiFi</div>
+                        <div class="badge badge-success">Laundry</div>
+                        <div class="badge badge-warning">Mess</div>
+                    </div>
+                    <p class="text-base-content/70">Starting from</p>
+                    <p class="text-2xl font-bold text-primary">₹8,500/month</p>
+                    <div class="card-actions justify-end mt-4">
+                        <button class="btn btn-primary">View Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more hostel cards as needed -->
+
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center py-8">
+        <div class="btn-group">
+            <button class="btn btn-outline">«</button>
+            <button class="btn btn-outline btn-active">1</button>
+            <button class="btn btn-outline">»</button>
+        </div>
+    </div>
+
+    <!-- Add this modal markup just before the closing body tag -->
+    <div id="hostelModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-base-100 rounded-lg shadow-xl w-full max-w-lg overflow-y-auto max-h-[85vh]">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center p-4 border-b border-base-300">
+                <h2 class="text-xl font-bold text-primary" id="modalTitle"></h2>
+                <button onclick="closeModal()" class="btn btn-ghost btn-sm btn-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Content -->
+            <div id="modalContent" class="p-4"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const priceFilter = document.getElementById('priceFilter');
+            const roomFilter = document.getElementById('roomFilter');
+            const distanceFilter = document.getElementById('distanceFilter');
+            const hostelCards = document.querySelectorAll('.card');
+
+            // Add event listeners to all filters
+            [priceFilter, roomFilter, distanceFilter].forEach(filter => {
+                filter.addEventListener('change', filterHostels);
+            });
+
+            function filterHostels() {
+                const selectedPrice = priceFilter.value;
+                const selectedRoom = roomFilter.value;
+                const selectedDistance = distanceFilter.value;
+
+                hostelCards.forEach(card => {
+                    const price = parseInt(card.dataset.price);
+                    const room = card.dataset.room;
+                    const distance = parseFloat(card.dataset.distance);
+
+                    let showCard = true;
+
+                    // Price filter
+                    if (selectedPrice) {
+                        const [minPrice, maxPrice] = selectedPrice.split('-').map(Number);
+                        if (selectedPrice === '12000+') {
+                            if (price < 12000) showCard = false;
+                        } else if (price < minPrice || price > maxPrice) {
+                            showCard = false;
+                        }
+                    }
+
+                    // Room filter
+                    if (selectedRoom && room !== selectedRoom) {
+                        showCard = false;
+                    }
+
+                    // Distance filter
+                    if (selectedDistance) {
+                        const [minDist, maxDist] = selectedDistance.split('-').map(Number);
+                        if (distance < minDist || distance > maxDist) {
+                            showCard = false;
+                        }
+                    }
+
+                    // Show or hide the card
+                    card.style.display = showCard ? 'flex' : 'none';
+                });
+            }
+
+            // Add click event listeners to all "View Details" buttons
+            document.querySelectorAll('.card').forEach(card => {
+                const viewDetailsBtn = card.querySelector('.btn-primary');
+                viewDetailsBtn.addEventListener('click', () => showHostelDetails(card));
+            });
+        });
+
+        function showHostelDetails(card) {
+            const modal = document.getElementById('hostelModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+
+            // Get hostel details from the card
+            const title = card.querySelector('.card-title').textContent;
+            const image = card.querySelector('img').src;
+            const distance = card.querySelector('.flex.items-center.gap-2 span').textContent;
+            const price = card.querySelector('.text-2xl.font-bold').textContent;
+            const amenities = Array.from(card.querySelectorAll('.badge'))
+                .map(badge => badge.textContent)
+                .join(', ');
+
+            // Populate modal content
+            modalTitle.textContent = title;
+            modalContent.innerHTML = `
+                <img src="${image}" alt="${title}" class="w-full h-48 object-cover rounded-lg mb-3">
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>${distance}</span>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold mb-1">Amenities</h3>
+                        <p class="text-sm text-base-content/70">${amenities}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold mb-1">Price</h3>
+                        <p class="text-lg font-bold text-primary">${price}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold mb-1">Description</h3>
+                        <p class="text-sm text-base-content/70">This modern hostel offers comfortable accommodation with all essential amenities. 
+                        The property is well-maintained and provides a safe environment for students.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold mb-1">Contact Information</h3>
+                        <div class="text-sm text-base-content/70">
+                            <p>Phone: +91 98765 43210</p>
+                            <p>Email: info@${title.toLowerCase().replace(' ', '')}s.com</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-2 mt-4 pt-2 border-t border-base-300">
+                        <button onclick="closeModal()" class="btn btn-ghost btn-sm">Close</button>
+                        <button class="btn btn-primary btn-sm">Book Now</button>
+                    </div>
+                </div>
+            `;
+
+            // Show modal
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('hostelModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('hostelModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('hostelModal')) {
+                closeModal();
+            }
+        });
+
+        // Close modal on escape key press
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Hamburger menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (menu.classList.contains('active') && !menu.contains(e.target) && !btn.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+        // Close on escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeMobileMenu();
+        });
+    </script>
+
+</body>
+</html>
